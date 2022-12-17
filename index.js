@@ -3,6 +3,7 @@ const mysql = require('mysql2');
 const inquirer = require('inquirer');
 
 
+
 inquirer
   .prompt([
     {
@@ -11,12 +12,13 @@ inquirer
       message: 'What would you like to do?',
      choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update employee role']
     },
-    ]);
+    ])
 
     .then(choice => {
         switch (choice.main) {
             case 'View all departments':
                 // db query to view departments table
+                
                 break;
             case 'View all roles':
                 // db query to view roles table
@@ -48,7 +50,7 @@ inquirer
                 // return to main menu
                 break;
         }
-    })
+    });
     //   .then((answers) => {
 //     const htmlPageContent = generateHTML(answers);
 
