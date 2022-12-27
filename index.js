@@ -1,6 +1,7 @@
+const db = require('./config/connection');
 require('console.table');
 const inquirer = require('inquirer');
-const db = require('./queries');
+// const db = require('./queries');
 
 function mainMenu() {
 
@@ -20,13 +21,15 @@ function mainMenu() {
             switch (choice.main) {
                 case 'View all departments':
                     // db query to view departments table
-                    allDepartments();
+                    viewAllDepts();
                     break;
                 case 'View all roles':
                     // db query to view roles table
+                    viewAllRoles();
                     break;
                 case 'View all employees':
                     // db query to view employee table
+                    viewAllEmps();
                     break;
                 case 'Add a department':
                     // prompt to enter a department name
@@ -58,41 +61,29 @@ function mainMenu() {
 
 mainMenu();
 
-async function allDepartments() {
-    const deptData = await db.viewAllDepts();
-    console.table(deptData);
-    mainMenu();
-}
-    //   .then((answers) => {
-//     const htmlPageContent = generateHTML(answers);
+function viewAllDepts() {
+    let allDept = db.query('SELECT * FROM department', (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        console.table(result)
+    });
+};
 
-//     fs.writeFile('index.html', htmlPageContent, (err) =>
-//       err ? console.log(err) : console.log('Successfully created index.html!')
-//     );
-//   });
-//     {
-//       type: 'input',
-//       name: 'location',
-//       message: 'Where are you from?',
-//     },
-//     {
-//       type: 'input',
-//       name: 'hobby',
-//       message: 'What is your favorite hobby?',
-//     },
-//     {
-//       type: 'input',
-//       name: 'food',
-//       message: 'What is your favorite food?',
-//     },
-//     {
-//       type: 'input',
-//       name: 'github',
-//       message: 'Enter your GitHub Username',
-//     },
-//     {
-//       type: 'input',
-//       name: 'linkedin',
-//       message: 'Enter your LinkedIn URL.',
-//     },
-//   ])
+function viewAllRoles() {
+    let allDept = db.query('SELECT * FROM role', (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        console.table(result)
+    });
+};
+
+function viewAllEmps() {
+    let allDept = db.query('SELECT * FROM employee', (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        console.table(result)
+    });
+};

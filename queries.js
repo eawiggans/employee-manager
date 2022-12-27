@@ -1,4 +1,19 @@
-const connection = require('./config/connection');
+// const connection = require('./config/connection');
+
+const mysql = require('mysql2/promise');
+// require('dotenv').config();
+
+const connection = mysql.createConnection(
+  {
+    host: 'localhost',
+    // MySQL username,
+    user: 'root',
+    // TODO: Add MySQL password here
+    password: 'emmaEMMA',
+    database: 'business_db'
+  },
+  console.log(`Connected to the database.`)
+);
 
 
 
@@ -6,10 +21,12 @@ class DB {
 
     constructor(connection){
         this.connection = connection;
+        console.log('this is this.connection');
+        console.log(this.connection.database);
     }
 
     viewAllDepts() {
-        return this.connection.query('SELECT * FROM department', (error, response) => {
+        this.connection.query('SELECT * FROM department', function(error, response) {
             if (error) throw error;
             console.log(response);
         });
