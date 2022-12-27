@@ -47,6 +47,7 @@ function mainMenu() {
                     // prompt to enter employee first name, last name, role id, and manager id (if they have a manager)
                     // db query to add new employee to employees table
                     // return to main menu
+                    addEmployee();
                     break;
                 case 'Update employee role':
                     // db query to pull up all employees by last name
@@ -123,7 +124,7 @@ function addRole() {
             {
                 name: 'name',
                 type: 'input',
-                message: 'Please enter the name of the role you would like to add:'
+                message: 'Please enter the title of the role you would like to add:'
             },
             {
                 name: 'salary',
@@ -138,12 +139,90 @@ function addRole() {
         ])
         .then(function(answer) {
             const sql = `INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)`;
-            db.query(sql, [answer.title, answer.salary, answer.department], (err, result) => {
+            db.query(sql, [answer.name, answer.salary, answer.department], (err, result) => {
                 if (err) {
                     console.log(err);
                 }
                 console.log(result);
                 viewAllRoles();
+            })
+        })
+};
+
+function addEmployee() {
+    inquirer
+        .prompt([
+            {
+                name: 'firstName',
+                type: 'input',
+                message: 'Please enter employee first name:'
+            },
+            {
+                name: 'lastName',
+                type: 'input',
+                message: 'Please enter employee last name:'
+            },
+            {
+                name: 'role',
+                type: 'input',
+                message: 'Please enter the id of the employee role:'
+            },
+            {
+                name: 'manager',
+                type: 'input',
+                message: 'Please enter the id of the manager employee reports to:'
+            }
+        ])
+        .then(function(answer) {
+            const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
+            db.query(sql, [answer.firstName, answer.lastName, answer.role, answer.manager], (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(result);
+                viewAllEmps();
+            })
+        })
+};
+
+function editEmployee() {
+    // db query to get all employee last names
+    // inquirer prompt with employees as options
+    // inquirer prompt to enter new role id
+    // db query to select employee and replace role id
+    // return to main menu
+
+    inquirer
+        .prompt([
+            {
+                name: 'firstName',
+                type: 'input',
+                message: 'Please enter employee first name:'
+            },
+            {
+                name: 'lastName',
+                type: 'input',
+                message: 'Please enter employee last name:'
+            },
+            {
+                name: 'role',
+                type: 'input',
+                message: 'Please enter the id of the employee role:'
+            },
+            {
+                name: 'manager',
+                type: 'input',
+                message: 'Please enter the id of the manager employee reports to:'
+            }
+        ])
+        .then(function(answer) {
+            const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
+            db.query(sql, [answer.firstName, answer.lastName, answer.role, answer.manager], (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(result);
+                viewAllEmps();
             })
         })
 };
