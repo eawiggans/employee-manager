@@ -35,11 +35,13 @@ function mainMenu() {
                     // prompt to enter a department name
                     // db query to add department name to departments table
                     // return to main menu
+                    addDept();
                     break;
                 case 'Add a role':
                     // prompt to enter a role title, salary in decimal format (no dollar sign), and department id
                     // db query to add new role to roles table
                     // return to main menu
+                    addRole();
                     break;
                 case 'Add an employee':
                     // prompt to enter employee first name, last name, role id, and manager id (if they have a manager)
@@ -55,35 +57,93 @@ function mainMenu() {
                     // return to main menu
                     break;
             }
-        })
+        });
 
 }
 
 mainMenu();
 
 function viewAllDepts() {
-    let allDept = db.query('SELECT * FROM department', (err, result) => {
+    db.query('SELECT * FROM department', (err, result) => {
         if (err) {
             console.log(err);
         }
-        console.table(result)
+        console.log('DEPARMENTS');
+        console.table(result);
+        mainMenu();
     });
 };
 
 function viewAllRoles() {
-    let allDept = db.query('SELECT * FROM role', (err, result) => {
+    db.query('SELECT * FROM role', (err, result) => {
         if (err) {
             console.log(err);
         }
-        console.table(result)
+        console.log('ROLES');
+        console.table(result);
+        mainMenu();
     });
 };
 
 function viewAllEmps() {
-    let allDept = db.query('SELECT * FROM employee', (err, result) => {
+    db.query('SELECT * FROM employee', (err, result) => {
         if (err) {
             console.log(err);
         }
-        console.table(result)
+        console.log('EMPLOYEES')
+        console.table(result);
+        mainMenu();
     });
+};
+
+function addDept() {
+    inquirer
+        .prompt([
+            {
+                name: 'name',
+                type: 'input',
+                message: 'Please enter the name of the department you would like to add:'
+            }
+        ])
+        .then(function(answer) {
+            const sql = `INSERT INTO department (name) VALUES (?)`;
+            db.query(sql, [answer.name], (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(result);
+                viewAllDepts();
+            })
+        })
+};
+
+function addRole() {
+    inquirer
+        .prompt([
+            {
+                name: 'name',
+                type: 'input',
+                message: 'Please enter the name of the role you would like to add:'
+            },
+            {
+                name: 'salary',
+                type: 'input',
+                message: 'Please enter the salary for this role:'
+            },
+            {
+                name: 'department',
+                type: 'input',
+                message: 'Please enter the department id for this role:'
+            }
+        ])
+        .then(function(answer) {
+            const sql = `INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)`;
+            db.query(sql, [answer.title, answer.salary, answer.department], (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(result);
+                viewAllRoles();
+            })
+        })
 };
