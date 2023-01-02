@@ -112,8 +112,9 @@ function addDept() {
                 if (err) {
                     console.log(err);
                 }
-                console.log(result);
+                
                 viewAllDepts();
+                mainMenu();
             })
         })
 };
@@ -143,8 +144,9 @@ function addRole() {
                 if (err) {
                     console.log(err);
                 }
-                console.log(result);
+                
                 viewAllRoles();
+                mainMenu();
             })
         })
 };
@@ -179,50 +181,51 @@ function addEmployee() {
                 if (err) {
                     console.log(err);
                 }
-                console.log(result);
+
                 viewAllEmps();
+                mainMenu();
             })
         })
 };
 
-function editEmployee() {
-    // db query to get all employee last names
-    // inquirer prompt with employees as options
-    // inquirer prompt to enter new role id
-    // db query to select employee and replace role id
-    // return to main menu
+// function editEmployee() {
+//     // db query to get all employee last names
+//     // inquirer prompt with employees as options
+//     // inquirer prompt to enter new role id
+//     // db query to select employee and replace role id
+//     // return to main menu
 
-    inquirer
-        .prompt([
-            {
-                name: 'firstName',
-                type: 'input',
-                message: 'Please enter employee first name:'
-            },
-            {
-                name: 'lastName',
-                type: 'input',
-                message: 'Please enter employee last name:'
-            },
-            {
-                name: 'role',
-                type: 'input',
-                message: 'Please enter the id of the employee role:'
-            },
-            {
-                name: 'manager',
-                type: 'input',
-                message: 'Please enter the id of the manager employee reports to:'
-            }
-        ])
-        .then(function(answer) {
-            const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
-            db.query(sql, [answer.firstName, answer.lastName, answer.role, answer.manager], (err, result) => {
-                if (err) {
-                    console.log(err);
-                }
-                console.log(result);
-                viewAllEmps();
-            })
-        })
-};
+//     inquirer
+//         .prompt([
+//             {
+//                 name: 'firstName',
+//                 type: 'input',
+//                 message: 'Please enter employee first name:'
+//             },
+//             {
+//                 name: 'lastName',
+//                 type: 'input',
+//                 message: 'Please enter employee last name:'
+//             },
+//             {
+//                 name: 'role',
+//                 type: 'input',
+//                 message: 'Please enter the id of the employee role:'
+//             },
+//             {
+//                 name: 'manager',
+//                 type: 'input',
+//                 message: 'Please enter the id of the manager employee reports to:'
+//             }
+//         ])
+//         .then(function(answer) {
+//             const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
+//             db.query(sql, [answer.firstName, answer.lastName, answer.role, answer.manager], (err, result) => {
+//                 if (err) {
+//                     console.log(err);
+//                 }
+//                 console.log(result);
+//                 viewAllEmps();
+//             })
+//         })
+// };
